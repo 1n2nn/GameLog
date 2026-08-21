@@ -1,0 +1,488 @@
+{% extends "base.html" %}
+
+{% block title %}Game Log - ホーム{% endblock %}
+
+{% block content %}
+
+<!-- ページタイトル -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h1 class="fw-bold mb-1">🎮 Game Log</h1>
+        <p class="text-secondary mb-0">
+            プレイしたゲームを記録・管理しよう
+        </p>
+    </div>
+
+    <a href="/add" class="btn btn-primary">
+        ＋ ゲームを登録
+    </a>
+
+</div>
+
+
+<!-- 統計情報 -->
+<div class="row g-3 mb-4">
+
+    <div class="col-12 col-md-3">
+
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+
+                <p class="text-secondary mb-1">
+                    登録ゲーム
+                </p>
+
+                <h2 class="fw-bold mb-0">
+                    {{ total_games }}
+                    <small class="fs-6">本</small>
+                </h2>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-12 col-md-3">
+
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+
+                <p class="text-secondary mb-1">
+                    クリア済み
+                </p>
+
+                <h2 class="fw-bold mb-0">
+                    {{ completed_games }}
+                    <small class="fs-6">本</small>
+                </h2>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-12 col-md-3">
+
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+
+                <p class="text-secondary mb-1">
+                    プレイ中
+                </p>
+
+                <h2 class="fw-bold mb-0">
+                    {{ playing_games }}
+                    <small class="fs-6">本</small>
+                </h2>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-12 col-md-3">
+
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+
+                <p class="text-secondary mb-1">
+                    総プレイ時間
+                </p>
+
+                <h2 class="fw-bold mb-0">
+                    {{ total_play_time }}
+                    <small class="fs-6">時間</small>
+                </h2>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ジャンル別ゲーム数 -->
+<div class="card shadow-sm mb-4">
+
+    <div class="card-body">
+
+        <h5 class="card-title mb-3">
+            📊 ジャンル別ゲーム数
+        </h5>
+
+        {% if genre_stats %}
+
+        <div class="row g-3">
+
+            {% for item in genre_stats %}
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+                <div class="border rounded p-3">
+
+                    <div class="fw-bold">
+                        {{ item["genre"] }}
+                    </div>
+
+                    <div class="fs-4">
+                        {{ item["count"] }}
+                        <small class="fs-6 text-secondary">
+                            本
+                        </small>
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <p class="text-secondary mb-0">
+            まだジャンルが登録されていません。
+        </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- 検索 -->
+<div class="card shadow-sm mb-4">
+
+    <div class="card-body">
+
+        <h5 class="card-title mb-3">
+            🔍 ゲームを検索
+        </h5>
+
+        <form method="GET" action="/">
+
+            <div class="row g-3">
+
+                <!-- タイトル -->
+                <div class="col-12 col-md-5">
+
+                    <label for="keyword" class="form-label">
+                        ゲームタイトル
+                    </label>
+
+                    <input
+                        type="text"
+                        id="keyword"
+                        name="keyword"
+                        class="form-control"
+                        placeholder="ゲームタイトルを入力"
+                        value="{{ keyword }}"
+                    >
+
+                </div>
+
+
+                <!-- ジャンル -->
+                <div class="col-12 col-md-3">
+
+                    <label for="genre" class="form-label">
+                        ジャンル
+                    </label>
+
+                    <select
+                        id="genre"
+                        name="genre"
+                        class="form-select"
+                    >
+
+                        <option value="">すべて</option>
+
+                        <option value="アクション"
+                            {% if selected_genre == "アクション" %}selected{% endif %}>
+                            アクション
+                        </option>
+
+                        <option value="RPG"
+                            {% if selected_genre == "RPG" %}selected{% endif %}>
+                            RPG
+                        </option>
+
+                        <option value="アドベンチャー"
+                            {% if selected_genre == "アドベンチャー" %}selected{% endif %}>
+                            アドベンチャー
+                        </option>
+
+                        <option value="シミュレーション"
+                            {% if selected_genre == "シミュレーション" %}selected{% endif %}>
+                            シミュレーション
+                        </option>
+
+                        <option value="パズル"
+                            {% if selected_genre == "パズル" %}selected{% endif %}>
+                            パズル
+                        </option>
+
+                        <option value="スポーツ"
+                            {% if selected_genre == "スポーツ" %}selected{% endif %}>
+                            スポーツ
+                        </option>
+
+                        <option value="サンドボックス"
+                            {% if selected_genre == "サンドボックス" %}selected{% endif %}>
+                            サンドボックス
+                        </option>
+
+                        <option value="その他"
+                            {% if selected_genre == "その他" %}selected{% endif %}>
+                            その他
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- プレイ状況 -->
+                <div class="col-12 col-md-3">
+
+                    <label for="status" class="form-label">
+                        プレイ状況
+                    </label>
+
+                    <select
+                        id="status"
+                        name="status"
+                        class="form-select"
+                    >
+
+                        <option value="">すべて</option>
+
+                        <option value="プレイ予定"
+                            {% if selected_status == "プレイ予定" %}selected{% endif %}>
+                            プレイ予定
+                        </option>
+
+                        <option value="プレイ中"
+                            {% if selected_status == "プレイ中" %}selected{% endif %}>
+                            プレイ中
+                        </option>
+
+                        <option value="クリア済み"
+                            {% if selected_status == "クリア済み" %}selected{% endif %}>
+                            クリア済み
+                        </option>
+
+                        <option value="積みゲー"
+                            {% if selected_status == "積みゲー" %}selected{% endif %}>
+                            積みゲー
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- ボタン -->
+                <div class="col-12">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        検索する
+                    </button>
+
+                    <a
+                        href="/"
+                        class="btn btn-outline-secondary"
+                    >
+                        リセット
+                    </a>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- 検索結果 -->
+{% if keyword or selected_genre or selected_status %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+    <h5 class="mb-0">
+        検索結果
+    </h5>
+
+    <span class="text-secondary">
+        {{ games|length }}件
+    </span>
+
+</div>
+
+{% else %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+    <h5 class="mb-0">
+        登録ゲーム
+    </h5>
+
+    <span class="text-secondary">
+        {{ games|length }}件
+    </span>
+
+</div>
+
+{% endif %}
+
+
+<!-- ゲーム一覧 -->
+{% if games %}
+
+<div class="row g-4">
+
+    {% for game in games %}
+
+    <div class="col-12 col-md-6 col-lg-4">
+
+        <div class="card h-100 shadow-sm">
+
+
+            <!-- ゲーム画像 -->
+            {% if game["image"] %}
+
+            <img
+                src="{{ url_for('static', filename='uploads/' + game['image']) }}"
+                class="card-img-top"
+                alt="{{ game['title'] }}"
+                style="height: 250px; object-fit: cover;"
+            >
+
+            {% else %}
+
+            <div
+                class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center"
+                style="height: 250px;"
+            >
+                <span>画像なし</span>
+            </div>
+
+            {% endif %}
+
+
+            <!-- ゲーム情報 -->
+            <div class="card-body d-flex flex-column">
+
+                <h5 class="card-title fw-bold">
+                    {{ game["title"] }}
+                </h5>
+
+                <div class="mb-2">
+
+                    {% if game["genre"] %}
+                    <span class="badge text-bg-primary">
+                        {{ game["genre"] }}
+                    </span>
+                    {% endif %}
+
+                    {% if game["status"] %}
+                    <span class="badge text-bg-secondary">
+                        {{ game["status"] }}
+                    </span>
+                    {% endif %}
+
+                </div>
+
+
+                {% if game["rating"] %}
+
+                <p class="mb-2">
+
+                    {% for i in range(game["rating"]) %}
+                        ⭐
+                    {% endfor %}
+
+                </p>
+
+                {% endif %}
+
+
+                {% if game["play_time"] is not none %}
+
+                <p class="text-secondary mb-2">
+                    ⏱️ {{ game["play_time"] }}時間
+                </p>
+
+                {% endif %}
+
+
+                {% if game["review"] %}
+
+                <p class="card-text text-secondary">
+
+                    {{ game["review"][:100] }}
+
+                    {% if game["review"]|length > 100 %}
+                        …
+                    {% endif %}
+
+                </p>
+
+                {% endif %}
+
+
+                <div class="mt-auto pt-3">
+
+                    <a
+                        href="/game/{{ game['id'] }}"
+                        class="btn btn-primary w-100"
+                    >
+                        詳細を見る
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="text-center py-5">
+
+    <div class="fs-1 mb-3">
+        🎮
+    </div>
+
+    <h4>
+        ゲームが見つかりません
+    </h4>
+
+    <p class="text-secondary">
+        条件を変更して検索してください。
+    </p>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,304 @@
+{% extends "base.html" %}
+
+{% block title %}Game Log - ゲーム登録{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-12 col-lg-8">
+
+        <div class="mb-4">
+
+            <h1 class="fw-bold">
+                🎮 ゲームを登録
+            </h1>
+
+            <p class="text-secondary">
+                プレイしたゲームの情報を記録します。
+            </p>
+
+        </div>
+
+
+        <div class="card shadow-sm">
+
+            <div class="card-body p-4">
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+
+                    <!-- ゲームタイトル -->
+                    <div class="mb-3">
+
+                        <label
+                            for="title"
+                            class="form-label fw-bold"
+                        >
+                            ゲームタイトル
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            class="form-control"
+                            placeholder="例：Minecraft"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- ジャンル -->
+                    <div class="mb-3">
+
+                        <label
+                            for="genre"
+                            class="form-label fw-bold"
+                        >
+                            ジャンル
+                        </label>
+
+                        <select
+                            id="genre"
+                            name="genre"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                選択してください
+                            </option>
+
+                            <option value="アクション">
+                                アクション
+                            </option>
+
+                            <option value="RPG">
+                                RPG
+                            </option>
+
+                            <option value="アドベンチャー">
+                                アドベンチャー
+                            </option>
+
+                            <option value="シミュレーション">
+                                シミュレーション
+                            </option>
+
+                            <option value="パズル">
+                                パズル
+                            </option>
+
+                            <option value="スポーツ">
+                                スポーツ
+                            </option>
+
+                            <option value="サンドボックス">
+                                サンドボックス
+                            </option>
+
+                            <option value="その他">
+                                その他
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- プレイ状況 -->
+                    <div class="mb-3">
+
+                        <label
+                            for="status"
+                            class="form-label fw-bold"
+                        >
+                            プレイ状況
+                        </label>
+
+                        <select
+                            id="status"
+                            name="status"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                選択してください
+                            </option>
+
+                            <option value="プレイ予定">
+                                プレイ予定
+                            </option>
+
+                            <option value="プレイ中">
+                                プレイ中
+                            </option>
+
+                            <option value="クリア済み">
+                                クリア済み
+                            </option>
+
+                            <option value="積みゲー">
+                                積みゲー
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- プレイ時間 -->
+                    <div class="mb-3">
+
+                        <label
+                            for="play_time"
+                            class="form-label fw-bold"
+                        >
+                            プレイ時間
+                        </label>
+
+                        <div class="input-group">
+
+                            <input
+                                type="number"
+                                id="play_time"
+                                name="play_time"
+                                class="form-control"
+                                min="0"
+                                placeholder="例：120"
+                            >
+
+                            <span class="input-group-text">
+                                時間
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- 評価 -->
+                    <div class="mb-3">
+
+                        <label
+                            for="rating"
+                            class="form-label fw-bold"
+                        >
+                            評価
+                        </label>
+
+                        <select
+                            id="rating"
+                            name="rating"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                評価なし
+                            </option>
+
+                            <option value="5">
+                                ⭐⭐⭐⭐⭐
+                            </option>
+
+                            <option value="4">
+                                ⭐⭐⭐⭐
+                            </option>
+
+                            <option value="3">
+                                ⭐⭐⭐
+                            </option>
+
+                            <option value="2">
+                                ⭐⭐
+                            </option>
+
+                            <option value="1">
+                                ⭐
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- 感想 -->
+                    <div class="mb-3">
+
+                        <label
+                            for="review"
+                            class="form-label fw-bold"
+                        >
+                            感想
+                        </label>
+
+                        <textarea
+                            id="review"
+                            name="review"
+                            class="form-control"
+                            rows="6"
+                            placeholder="ゲームをプレイした感想を書いてください"
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- 画像 -->
+                    <div class="mb-4">
+
+                        <label
+                            for="image"
+                            class="form-label fw-bold"
+                        >
+                            ゲーム画像
+                        </label>
+
+                        <input
+                            type="file"
+                            id="image"
+                            name="image"
+                            class="form-control"
+                            accept="image/*"
+                        >
+
+                        <div class="form-text">
+                            ゲームのジャケット画像などを登録できます。
+                        </div>
+
+                    </div>
+
+
+                    <!-- ボタン -->
+                    <div class="d-flex gap-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            登録する
+                        </button>
+
+                        <a
+                            href="/"
+                            class="btn btn-outline-secondary"
+                        >
+                            キャンセル
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

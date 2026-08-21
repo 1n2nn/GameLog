@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Game Log - ログイン{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-12 col-md-6 col-lg-5">
+
+        <div class="text-center mb-4">
+
+            <h1 class="fw-bold">
+                🎮 Game Log
+            </h1>
+
+            <p class="text-secondary">
+                ゲーム記録を管理しましょう
+            </p>
+
+        </div>
+
+
+        <div class="card shadow-sm">
+
+            <div class="card-body p-4">
+
+                <h2 class="h4 fw-bold mb-4">
+                    ログイン
+                </h2>
+
+
+                <form method="POST">
+
+                    <!-- ユーザー名 -->
+                    <div class="mb-3">
+
+                        <label
+                            for="username"
+                            class="form-label fw-bold"
+                        >
+                            ユーザー名
+                        </label>
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            class="form-control"
+                            maxlength="30"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- パスワード -->
+                    <div class="mb-4">
+
+                        <label
+                            for="password"
+                            class="form-label fw-bold"
+                        >
+                            パスワード
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-control"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary w-100"
+                    >
+                        ログイン
+                    </button>
+
+                </form>
+
+
+                <div class="text-center mt-4">
+
+                    <span class="text-secondary">
+                        アカウントをお持ちでないですか？
+                    </span>
+
+                    <a href="/register">
+                        新規登録
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

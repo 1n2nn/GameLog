@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block title %}Game Log - {{ game["title"] }}{% endblock %}
+
+{% block content %}
+
+<div class="mb-4">
+
+    <a
+        href="/"
+        class="btn btn-outline-secondary"
+    >
+        ← ゲーム一覧に戻る
+    </a>
+
+</div>
+
+
+<div class="card shadow-sm">
+
+    <div class="card-body p-4">
+
+        <div class="row g-4">
+
+
+            <!-- ゲーム画像 -->
+            <div class="col-12 col-md-5">
+
+                {% if game["image"] %}
+
+                <img
+                    src="{{ url_for('static', filename='uploads/' + game['image']) }}"
+                    alt="{{ game['title'] }}"
+                    class="img-fluid rounded"
+                    style="width: 100%; max-height: 500px; object-fit: contain;"
+                >
+
+                {% else %}
+
+                <div
+                    class="bg-secondary text-white rounded d-flex align-items-center justify-content-center"
+                    style="height: 400px;"
+                >
+                    <span class="fs-5">
+                        画像なし
+                    </span>
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ゲーム情報 -->
+            <div class="col-12 col-md-7">
+
+                <h1 class="fw-bold mb-3">
+                    🎮 {{ game["title"] }}
+                </h1>
+
+
+                <!-- ジャンル・プレイ状況 -->
+
+                <div class="mb-4">
+
+                    {% if game["genre"] %}
+
+                    <span class="badge text-bg-primary fs-6 me-1">
+                        {{ game["genre"] }}
+                    </span>
+
+                    {% endif %}
+
+
+                    {% if game["status"] %}
+
+                    <span class="badge text-bg-secondary fs-6">
+                        {{ game["status"] }}
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- 評価 -->
+
+                {% if game["rating"] %}
+
+                <div class="mb-4">
+
+                    <h5 class="fw-bold">
+                        評価
+                    </h5>
+
+                    <div class="fs-4">
+
+                        {% for i in range(game["rating"]) %}
+                            ⭐
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- プレイ時間 -->
+
+                {% if game["play_time"] is not none %}
+
+                <div class="mb-4">
+
+                    <h5 class="fw-bold">
+                        プレイ時間
+                    </h5>
+
+                    <p class="fs-5">
+                        ⏱️ {{ game["play_time"] }}時間
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- 感想 -->
+
+                {% if game["review"] %}
+
+                <div class="mb-4">
+
+                    <h5 class="fw-bold">
+                        感想
+                    </h5>
+
+                    <div class="bg-light border rounded p-3">
+
+                        <p
+                            class="mb-0"
+                            style="white-space: pre-wrap;"
+                        >{{ game["review"] }}</p>
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- 操作ボタン -->
+
+                <div class="d-flex flex-wrap gap-2">
+
+                    <a
+                        href="/game/{{ game['id'] }}/edit"
+                        class="btn btn-primary"
+                    >
+                        ✏️ 編集
+                    </a>
+
+
+                    <form
+                        method="POST"
+                        action="/game/{{ game['id'] }}/delete"
+                        onsubmit="return confirm('このゲームを削除しますか？');"
+                    >
+
+                        <button
+                            type="submit"
+                            class="btn btn-outline-danger"
+                        >
+                            🗑️ 削除
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

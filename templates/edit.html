@@ -1,0 +1,347 @@
+{% extends "base.html" %}
+
+{% block title %}Game Log - ゲーム編集{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-12 col-lg-8">
+
+        <div class="mb-4">
+
+            <h1 class="fw-bold">
+                ✏️ ゲームを編集
+            </h1>
+
+            <p class="text-secondary">
+                ゲームの記録を変更します。
+            </p>
+
+        </div>
+
+
+        <div class="card shadow-sm">
+
+            <div class="card-body p-4">
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+
+                    <!-- ゲームタイトル -->
+                    <div class="mb-3">
+
+                        <label
+                            for="title"
+                            class="form-label fw-bold"
+                        >
+                            ゲームタイトル
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            class="form-control"
+                            value="{{ game['title'] }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- ジャンル -->
+                    <div class="mb-3">
+
+                        <label
+                            for="genre"
+                            class="form-label fw-bold"
+                        >
+                            ジャンル
+                        </label>
+
+                        <select
+                            id="genre"
+                            name="genre"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                選択してください
+                            </option>
+
+                            <option value="アクション"
+                                {% if game["genre"] == "アクション" %}selected{% endif %}>
+                                アクション
+                            </option>
+
+                            <option value="RPG"
+                                {% if game["genre"] == "RPG" %}selected{% endif %}>
+                                RPG
+                            </option>
+
+                            <option value="アドベンチャー"
+                                {% if game["genre"] == "アドベンチャー" %}selected{% endif %}>
+                                アドベンチャー
+                            </option>
+
+                            <option value="シミュレーション"
+                                {% if game["genre"] == "シミュレーション" %}selected{% endif %}>
+                                シミュレーション
+                            </option>
+
+                            <option value="パズル"
+                                {% if game["genre"] == "パズル" %}selected{% endif %}>
+                                パズル
+                            </option>
+
+                            <option value="スポーツ"
+                                {% if game["genre"] == "スポーツ" %}selected{% endif %}>
+                                スポーツ
+                            </option>
+
+                            <option value="サンドボックス"
+                                {% if game["genre"] == "サンドボックス" %}selected{% endif %}>
+                                サンドボックス
+                            </option>
+
+                            <option value="その他"
+                                {% if game["genre"] == "その他" %}selected{% endif %}>
+                                その他
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- プレイ状況 -->
+                    <div class="mb-3">
+
+                        <label
+                            for="status"
+                            class="form-label fw-bold"
+                        >
+                            プレイ状況
+                        </label>
+
+                        <select
+                            id="status"
+                            name="status"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                選択してください
+                            </option>
+
+                            <option value="プレイ予定"
+                                {% if game["status"] == "プレイ予定" %}selected{% endif %}>
+                                プレイ予定
+                            </option>
+
+                            <option value="プレイ中"
+                                {% if game["status"] == "プレイ中" %}selected{% endif %}>
+                                プレイ中
+                            </option>
+
+                            <option value="クリア済み"
+                                {% if game["status"] == "クリア済み" %}selected{% endif %}>
+                                クリア済み
+                            </option>
+
+                            <option value="積みゲー"
+                                {% if game["status"] == "積みゲー" %}selected{% endif %}>
+                                積みゲー
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- プレイ時間 -->
+                    <div class="mb-3">
+
+                        <label
+                            for="play_time"
+                            class="form-label fw-bold"
+                        >
+                            プレイ時間
+                        </label>
+
+                        <div class="input-group">
+
+                            <input
+                                type="number"
+                                id="play_time"
+                                name="play_time"
+                                class="form-control"
+                                min="0"
+                                value="{{ game['play_time'] if game['play_time'] is not none else '' }}"
+                            >
+
+                            <span class="input-group-text">
+                                時間
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- 評価 -->
+                    <div class="mb-3">
+
+                        <label
+                            for="rating"
+                            class="form-label fw-bold"
+                        >
+                            評価
+                        </label>
+
+                        <select
+                            id="rating"
+                            name="rating"
+                            class="form-select"
+                        >
+
+                            <option value=""
+                                {% if not game["rating"] %}selected{% endif %}>
+                                評価なし
+                            </option>
+
+                            <option value="5"
+                                {% if game["rating"] == 5 %}selected{% endif %}>
+                                ⭐⭐⭐⭐⭐
+                            </option>
+
+                            <option value="4"
+                                {% if game["rating"] == 4 %}selected{% endif %}>
+                                ⭐⭐⭐⭐
+                            </option>
+
+                            <option value="3"
+                                {% if game["rating"] == 3 %}selected{% endif %}>
+                                ⭐⭐⭐
+                            </option>
+
+                            <option value="2"
+                                {% if game["rating"] == 2 %}selected{% endif %}>
+                                ⭐⭐
+                            </option>
+
+                            <option value="1"
+                                {% if game["rating"] == 1 %}selected{% endif %}>
+                                ⭐
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- 感想 -->
+                    <div class="mb-3">
+
+                        <label
+                            for="review"
+                            class="form-label fw-bold"
+                        >
+                            感想
+                        </label>
+
+                        <textarea
+                            id="review"
+                            name="review"
+                            class="form-control"
+                            rows="6"
+                            placeholder="ゲームをプレイした感想を書いてください"
+                        >{{ game["review"] or "" }}</textarea>
+
+                    </div>
+
+
+                    <!-- 現在の画像 -->
+                    {% if game["image"] %}
+
+                    <div class="mb-3">
+
+                        <label class="form-label fw-bold">
+                            現在のゲーム画像
+                        </label>
+
+                        <div>
+
+                            <img
+                                src="{{ url_for('static', filename='uploads/' + game['image']) }}"
+                                alt="{{ game['title'] }}"
+                                class="img-fluid rounded"
+                                style="max-width: 300px; max-height: 300px; object-fit: contain;"
+                            >
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- 新しい画像 -->
+                    <div class="mb-4">
+
+                        <label
+                            for="image"
+                            class="form-label fw-bold"
+                        >
+                            ゲーム画像を変更
+                        </label>
+
+                        <input
+                            type="file"
+                            id="image"
+                            name="image"
+                            class="form-control"
+                            accept="image/*"
+                        >
+
+                        <div class="form-text">
+                            画像を選択しなければ、現在の画像がそのまま使用されます。
+                        </div>
+
+                    </div>
+
+
+                    <!-- ボタン -->
+                    <div class="d-flex flex-wrap gap-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            💾 変更を保存
+                        </button>
+
+                        <a
+                            href="/game/{{ game['id'] }}"
+                            class="btn btn-outline-secondary"
+                        >
+                            キャンセル
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
